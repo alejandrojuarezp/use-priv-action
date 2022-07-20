@@ -23,7 +23,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2
     - name: Get composite run steps repository
       uses: actions/checkout@v2
       with:
@@ -32,13 +31,11 @@ runs:
         token: ${{ inputs.token }}
         path: ./.github/useprivation
 
-      - name: ls
-        shell: bash
-        run: ls .github
+    - run: |
+        mkdir -p ./.github/workflows/priv
+        cp ./.github/useprivation/${{inputs.subpath}} ./.github/workflows/priv/action.yml
+      shell: bash
 
-#    - id: build_artifact
-#      uses: ./.github/useprivation/${{ inputs.subpath }}
-#      with:
-#        project_name: "ola-uservehicle"
-#        access_key: ${{ inputs.access_key }}
-#        secret_access_key: ${{ inputs.secret_key }}
+    - runs: ./.github/workflows/priv
+      with:
+        project_name: ${{ inputs.project_name }}
