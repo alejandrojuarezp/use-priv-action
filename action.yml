@@ -1,0 +1,44 @@
+name: 'useprivaction'
+description: 'Use priv action'
+inputs:
+  action:
+    required: true
+    type: string
+  ref:
+    required: true
+    type: string
+  token:
+    required: true
+    type: string
+  subpath:
+    required: true
+    type: string
+  access_key:
+    required: true
+    type: string
+  secret_key:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v2
+    - name: Get composite run steps repository
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ inputs.action }}
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+        path: ./.github/useprivation
+
+      - name: ls
+        shell: bash
+        run: ls .github
+
+#    - id: build_artifact
+#      uses: ./.github/useprivation/${{ inputs.subpath }}
+#      with:
+#        project_name: "ola-uservehicle"
+#        access_key: ${{ inputs.access_key }}
+#        secret_access_key: ${{ inputs.secret_key }}
